@@ -8,14 +8,16 @@ import { MessageBlock } from './MessageBlock';
 import { PeopleTable } from './PeopleTable';
 
 export function checkQuery(name: string, username: string, query: string) {
-  return name.toLocaleLowerCase().includes(query.toLocaleLowerCase()) || username.toLocaleLowerCase().includes(query.toLocaleLowerCase());
+  return (
+    name.toLocaleLowerCase().includes(query.toLocaleLowerCase()) ||
+    username.toLocaleLowerCase().includes(query.toLocaleLowerCase())
+  );
 }
 
-export function getFilteredPeople(
-  peopleTable: Person[],
-  query: string,
-) {
-  return peopleTable.filter(person => (checkQuery(person.name, person.username, query)))
+export function getFilteredPeople(peopleTable: Person[], query: string) {
+  return peopleTable.filter((person) =>
+    checkQuery(person.name, person.username, query),
+  );
 }
 
 export const PeopleTablePages = () => {
@@ -24,12 +26,12 @@ export const PeopleTablePages = () => {
 
   const { id } = useParams();
 
-  const filteredPeople = getFilteredPeople(peopleTable, query)
+  const filteredPeople = getFilteredPeople(peopleTable, query);
 
   return (
     <>
       <h1 className="title">People Page</h1>
-      <FilterPeople query={query} setQuery={setQuery}/>
+      <FilterPeople query={query} setQuery={setQuery} />
       <PeopleTable peopleTable={filteredPeople} personId={id} />
 
       {(isError || isLoading) && (

@@ -22,12 +22,11 @@ export const Modul = () => {
           <div className="modal-card">
             <header className="modal-card-head">
               <p className="modal-card-title">Modal title</p>
-              <button 
-                className="delete" 
+              <button
+                className="delete"
                 aria-label="close"
                 onClick={() => setIsOpen(false)}
-                >
-                </button>
+              ></button>
             </header>
             <section className="modal-card-body"></section>
             <footer className="modal-card-foot">
