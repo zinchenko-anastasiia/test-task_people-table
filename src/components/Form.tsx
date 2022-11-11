@@ -19,9 +19,7 @@ export const Form = () => {
   const [catchPhrase, setCatchPhrase] = useState('');
   const [bs, setBs] = useState('');
 
-
-
-  const dispatch = useDispatch<any>();
+  const dispatch = useDispatch();
 
   const { people } = useAppSelector((state) => state.people);
 
@@ -50,10 +48,39 @@ export const Form = () => {
       },
     };
   };
+  const IsFullTextInput =
+    name.trim().length > 0 &&
+    username.trim().length > 0 &&
+    email.trim().length > 0 &&
+    street.trim().length > 0 &&
+    suite.trim().length > 0 &&
+    city.trim().length > 0 &&
+    zipcode.trim().length > 0 &&
+    lat.trim().length > 0 &&
+    lng.trim().length > 0 &&
+    phone.trim().length > 0 &&
+    website.trim().length > 0 &&
+    companyName.trim().length > 0 &&
+    catchPhrase.trim().length > 0 &&
+    bs.trim().length > 0;
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     dispatch(peopleActions.add(newPerson()));
+    setName('');
+    setUsername('');
+    setEmail('');
+    setStreet('');
+    setSuite('');
+    setCity('');
+    setZipcode('');
+    setLat('');
+    setLng('');
+    setPhone('');
+    setWebsite('');
+    setCompanyName('');
+    setCatchPhrase('');
+    setBs('');
   };
   return (
     <>
@@ -67,8 +94,8 @@ export const Form = () => {
                 <input
                   className="input"
                   type="text"
-                  placeholder="Name"
                   value={name}
+                  required
                   onChange={(event) => {
                     setName(event.target.value);
                   }}
@@ -81,8 +108,8 @@ export const Form = () => {
                 <input
                   className="input"
                   type="text"
-                  placeholder="Username"
                   value={username}
+                  required
                   onChange={(event) => {
                     setUsername(event.target.value);
                   }}
@@ -97,8 +124,8 @@ export const Form = () => {
             <input
               className="input"
               type="email"
-              placeholder="e.g. alexsmith@gmail.com"
               value={email}
+              required
               onChange={(event) => {
                 setEmail(event.target.value);
               }}
@@ -115,6 +142,7 @@ export const Form = () => {
               type="text"
               placeholder=""
               value={street}
+              required
               onChange={(event) => {
                 setStreet(event.target.value);
               }}
@@ -130,6 +158,7 @@ export const Form = () => {
               type="text"
               placeholder=""
               value={suite}
+              required
               onChange={(event) => {
                 setSuite(event.target.value);
               }}
@@ -145,6 +174,7 @@ export const Form = () => {
               type="text"
               placeholder=""
               value={city}
+              required
               onChange={(event) => {
                 setCity(event.target.value);
               }}
@@ -160,6 +190,7 @@ export const Form = () => {
               type="text"
               placeholder=""
               value={zipcode}
+              required
               onChange={(event) => {
                 setZipcode(event.target.value);
               }}
@@ -176,6 +207,7 @@ export const Form = () => {
                   className="input"
                   type="text"
                   value={lat}
+                  required
                   onChange={(event) => {
                     setLat(event.target.value);
                   }}
@@ -189,6 +221,7 @@ export const Form = () => {
                   className="input"
                   type="text"
                   value={lng}
+                  required
                   onChange={(event) => {
                     setLng(event.target.value);
                   }}
@@ -207,6 +240,7 @@ export const Form = () => {
               className="input"
               type="text"
               value={phone}
+              required
               onChange={(event) => {
                 setPhone(event.target.value);
               }}
@@ -221,6 +255,7 @@ export const Form = () => {
               className="input"
               type="text"
               value={website}
+              required
               onChange={(event) => {
                 setWebsite(event.target.value);
               }}
@@ -237,6 +272,7 @@ export const Form = () => {
               className="input"
               type="text"
               value={companyName}
+              required
               onChange={(event) => {
                 setCompanyName(event.target.value);
               }}
@@ -251,6 +287,7 @@ export const Form = () => {
               className="input"
               type="text"
               value={catchPhrase}
+              required
               onChange={(event) => {
                 setCatchPhrase(event.target.value);
               }}
@@ -265,6 +302,7 @@ export const Form = () => {
               className="input"
               type="text"
               value={bs}
+              required
               onChange={(event) => {
                 setBs(event.target.value);
               }}
@@ -272,10 +310,13 @@ export const Form = () => {
           </div>
         </div>
         <footer className="modal-card-foot">
-          <button className="button is-success" type="submit">
+          <button
+            className="button is-success"
+            type="submit"
+            disabled={!IsFullTextInput}
+          >
             Save
           </button>
-          <button className="button">Cancel</button>
         </footer>
       </form>
     </>

@@ -15,7 +15,7 @@ export const PeopleInfo = () => {
   return (
     <>
       <div className="block">
-        <Link to="/people" className="button mb-4 mt-4">
+        <Link to="/people" className="button mb-4 mt-4 is-link is-outlined">
           back
         </Link>
         <nav className="pagination" role="navigation" aria-label="pagination">

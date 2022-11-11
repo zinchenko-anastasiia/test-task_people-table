@@ -4,12 +4,13 @@ import { useAppSelector } from '../store/hook';
 import * as peopleActions from '../store/slices/personSlicer';
 interface Props {
   id: number;
+  setIsUpdated: (value: boolean) => void;
 }
 
-export const UpdatingForm: React.FC<Props> = ({ id }) => {
+export const UpdatingForm: React.FC<Props> = ({ id, setIsUpdated }) => {
   const { people } = useAppSelector((state) => state.people);
   const person = people.find((user) => id && user.id === id);
-  const dispatch = useDispatch<any>();
+  const dispatch = useDispatch();
 
   const [newName, setNewName] = useState(person?.name);
   const [newUsername, setNewUsername] = useState(person?.username);
@@ -18,6 +19,7 @@ export const UpdatingForm: React.FC<Props> = ({ id }) => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setIsUpdated(true);
     dispatch(peopleActions.update({ person, newName, newUsername }));
   };
   return (

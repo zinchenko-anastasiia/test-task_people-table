@@ -11,3 +11,13 @@ export function getPeople(): Promise<Person[]> {
     .then(() => fetch(API_URL))
     .then((response) => response.json());
 }
+
+export function removePerson(id: number) {
+  return wait(500)
+    .then(() =>
+      fetch(`${API_URL}/${id}`, {
+        method: 'DELETE',
+      }),
+    )
+    .then((response) => response.json());
+}

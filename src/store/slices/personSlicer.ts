@@ -9,6 +9,12 @@ type PeopleState = {
   error: string;
 };
 
+interface updatedPeopleState {
+  person?: Person;
+  newName?: string;
+  newUsername?: string;
+}
+
 const initialState: PeopleState = {
   people: [],
   loading: false,
@@ -26,18 +32,18 @@ const peopleSlice = createSlice({
       state.loading = action.payload;
     },
     add: (state, action: PayloadAction<Person>) => {
-      state.people.concat(action.payload); // push
+      state.people.push(action.payload);
     },
     remove: (state, action: PayloadAction<number>) => {
       state.people = state.people.filter(
         (person) => person.id !== action.payload,
       );
     },
-    //@ts-ignore
-    update: (state, action: PayloadAction<any>) => {
-      console.log(action.payload.person.id);
-      const {newName, newUsername} = action.payload
+    update: (state, action: PayloadAction<updatedPeopleState>) => {
+      const { newName, newUsername } = action.payload;
+      // @ts-ignore
       state.people = [...state.people].map((person) => {
+        // @ts-ignore
         if (person.id === action.payload.person.id) {
           return {
             ...person,

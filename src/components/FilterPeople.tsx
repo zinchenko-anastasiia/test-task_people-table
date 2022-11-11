@@ -9,8 +9,8 @@ export const FilterPeople: React.FC<Props> = ({ query, setQuery }) => {
     setQuery(event.target.value);
   const handlerReset = () => setQuery('');
   return (
-    <div className='mt-1'>
-    <p className="control is-expanded has-icons-left has-icons-right">
+    <div className="mt-1">
+      <p className="control is-expanded has-icons-left has-icons-right">
         <input
           data-cy="searchInput"
           type="text"

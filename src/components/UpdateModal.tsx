@@ -2,18 +2,24 @@ import classNames from 'classnames';
 import { UpdatingForm } from './UpdatingForm';
 
 interface Props {
-  isOpenn: boolean;
-  setIsOpenn: (value: boolean) => void;
+  isOpenChangeModul: boolean;
+  setIsOpenChangeModul: (value: boolean) => void;
   id: number;
+  setIsUpdated: (value: boolean) => void;
 }
 
-export const UpdateModal: React.FC<Props> = ({ isOpenn, setIsOpenn, id }) => {
+export const UpdateModal: React.FC<Props> = ({
+  isOpenChangeModul,
+  setIsOpenChangeModul,
+  id,
+  setIsUpdated,
+}) => {
   return (
     <>
-      {isOpenn && (
+      {isOpenChangeModul && (
         <div
           className={classNames('modal', {
-            'is-active': isOpenn,
+            'is-active': isOpenChangeModul,
           })}
         >
           <div className="modal-background"></div>
@@ -22,11 +28,11 @@ export const UpdateModal: React.FC<Props> = ({ isOpenn, setIsOpenn, id }) => {
               <button
                 className="delete"
                 aria-label="close"
-                onClick={() => setIsOpenn(false)}
+                onClick={() => setIsOpenChangeModul(false)}
               ></button>
             </header>
             <section className="modal-card-body">
-              <UpdatingForm id={id} />
+              <UpdatingForm id={id} setIsUpdated={setIsUpdated}/>
             </section>
           </div>
         </div>

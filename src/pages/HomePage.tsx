@@ -11,7 +11,7 @@ export const HomePage = () => {
       </div>
       <div className="content is-medium">
         <h2 className="title is-2">About project</h2>
-        <p className="subtitle pt-1" >
+        <p className="subtitle pt-1">
           In this application you can work with a table of people
         </p>
         <h3 className="title is-3 pt-2">Basic functionality</h3>
