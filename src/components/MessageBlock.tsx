@@ -2,22 +2,20 @@ import { Person } from '../types/Person';
 import { Loader } from './Loader';
 
 interface Props {
-  isLoading: boolean;
-  isError: boolean;
+  loading: boolean;
   peopleTable: Person[];
 }
 
 export const MessageBlock: React.FC<Props> = ({
-  isLoading,
-  isError,
+  loading,
   peopleTable,
 }) => {
   return (
     <div className="block">
       <div className="box table-container">
-        {isLoading && <Loader />}
+        {loading && <Loader />}
 
-        {isError && (
+        {/* {isError && (
           <p data-cy="peopleLoadingError" className="has-text-danger">
             Something went wrong
           </p>
@@ -25,7 +23,7 @@ export const MessageBlock: React.FC<Props> = ({
 
         {!isError && !isLoading && peopleTable.length === 0 && (
           <p data-cy="noPeopleMessage">There are no people on the server</p>
-        )}
+        )} */}
       </div>
     </div>
   );

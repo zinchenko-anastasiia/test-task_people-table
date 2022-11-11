@@ -1,11 +1,12 @@
 import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getPeople } from '../Api';
-import { DataContext } from '../context/Data';
 import { Person } from '../types/Person';
 import { FilterPeople } from './FilterPeople';
 import { MessageBlock } from './MessageBlock';
 import { PeopleTable } from './PeopleTable';
+import * as peopleActions from '../store/slices/personSlicer';
+import { useDispatch } from 'react-redux/es/hooks/useDispatch';
+import { useAppSelector } from '../store/hook';
 
 export function checkQuery(name: string, username: string, query: string) {
   return (
@@ -22,23 +23,27 @@ export function getFilteredPeople(peopleTable: Person[], query: string) {
 
 export const PeopleTablePages = () => {
   const [query, setQuery] = useState('');
-  const { peopleTable, isError, isLoading } = useContext(DataContext);
+  const dispatch = useDispatch<any>();
+  
+  const { people, loading } = useAppSelector((state) => state.people);
+  useEffect(() => {
+    dispatch(peopleActions.fetchUsers());
+  }, []);
 
   const { id } = useParams();
 
-  const filteredPeople = getFilteredPeople(peopleTable, query);
+  const filteredPeople = getFilteredPeople(people, query);
 
   return (
     <>
       <h1 className="title">People Page</h1>
       <FilterPeople query={query} setQuery={setQuery} />
-      <PeopleTable peopleTable={filteredPeople} personId={id} />
+      <PeopleTable />
 
-      {(isError || isLoading) && (
+      {loading && (
         <MessageBlock
-          isError={isError}
-          isLoading={isLoading}
-          peopleTable={peopleTable}
+        loading={loading}
+          peopleTable={people}
         />
       )}
     </>

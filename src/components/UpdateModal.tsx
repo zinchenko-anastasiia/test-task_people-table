@@ -5,17 +5,17 @@ import { useAppSelector } from '../store/hook';
 import { Form } from './Form';
 
 interface Props {
-  isOpen: boolean;
-  setIsOpen: (value: boolean) => void;
+  isOpenn: boolean;
+  setIsOpenn: (value: boolean) => void;
 }
 
-export const Modul: React.FC<Props> = ({ isOpen, setIsOpen }) => {
+export const UpdateModal: React.FC<Props> = ({ isOpenn, setIsOpenn }) => {
   return (
     <>
-      {isOpen && (
+      {isOpenn && (
         <div
           className={classNames('modal', {
-            'is-active': isOpen,
+            'is-active': isOpenn,
           })}
         >
           <div className="modal-background"></div>
@@ -24,12 +24,11 @@ export const Modul: React.FC<Props> = ({ isOpen, setIsOpen }) => {
               <button
                 className="delete"
                 aria-label="close"
-                onClick={() => setIsOpen(false)}
+                onClick={() => setIsOpenn(false)}
               ></button>
             </header>
             <section className="modal-card-body">
-              <Form
-              />
+              <Form />
             </section>
           </div>
         </div>

@@ -1,11 +1,16 @@
 import ReactDOM from 'react-dom/client';
+import { Provider } from 'react-redux';
 import { HashRouter as Router } from 'react-router-dom';
 // import { BrowserRouter as Router } from 'react-router-dom';
 import { App } from './App';
+//@ts-ignore
+import {store} from './store/store'
 
 const Root = () => (
   <Router>
+    <Provider store={store}>
     <App />
+    </Provider>
   </Router>
 );
 

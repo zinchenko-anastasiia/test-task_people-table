@@ -5,12 +5,10 @@ import { NotFoundPage } from './components/NotFoundPage';
 import { PageNavLink } from './components/PageNavLink';
 import { PeopleInfo } from './components/PeopleInfo';
 import { PeopleTablePages } from './components/PeopleTablePages';
-import { DataProvider } from './context/Data';
 import './styles/mystyles.scss';
 
 export const App = () => {
   return (
-    <DataProvider>
       <div>
         <nav className="navbar is-fixed-top has-shadow">
           <div className="container">
@@ -36,6 +34,5 @@ export const App = () => {
           </div>
         </main>
       </div>
-    </DataProvider>
   );
 };

@@ -1,32 +1,51 @@
-import React, { useContext, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { DataContext } from '../context/Data';
-import { Person } from '../types/Person';
+import { Link, useFetcher, useNavigate, useParams } from 'react-router-dom';
 import '../styles/mystyles.scss';
-import { Modul } from './Modal';
 
-interface Props {
-  peopleTable: Person[];
-}
+
+import classNames from 'classnames';
+import { useAppSelector } from '../store/hook';
+import { useDispatch } from 'react-redux/es/hooks/useDispatch';
 
 export const PeopleInfo = () => {
   const { id } = useParams();
-
-  const { peopleTable } = useContext(DataContext);
-  const person = peopleTable.find((user) => id && user.id === +id);
+  const { people } = useAppSelector((state) => state.people);
+  const person = people.find((user) => id && user.id === +id);
+  //@ts-ignore
+  const currentPerson = person.id;
 
   return (
     <>
       <div className="block">
+        <Link to="/people" className="button">
+          back
+        </Link>
         <nav className="pagination" role="navigation" aria-label="pagination">
-          <Link to={`/people/${id}`} className="pagination-previous">
-            Previous
-          </Link>
-          <Link to={`/people/${id}`} className="pagination-next">
-            Next page
-          </Link>
+          <>
+            <Link
+              className={classNames('pagination-previous', {
+                'is-disabled': currentPerson == 1,
+              })}
+              to={`/people/${
+                currentPerson > 1 ? currentPerson - 1 : currentPerson
+              }`}
+            >
+              previous
+            </Link>
+            <Link
+              className={classNames('pagination-next', {
+                'is-disabled': currentPerson === people.length,
+              })}
+              to={`/people/${
+                currentPerson < people.length
+                  ? currentPerson + 1
+                  : currentPerson
+              }`}
+            >
+              next
+            </Link>
+          </>
         </nav>
-        <Modul />
+
         <div className="table-container">
           <table className="table table is-bordered is-striped is-hoverable is-narrow is-fullwidth ">
             <thead>
