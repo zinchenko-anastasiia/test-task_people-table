@@ -1,9 +1,8 @@
-import { useContext, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import { Person } from '../types/Person';
-import { FilterPeople } from './FilterPeople';
-import { MessageBlock } from './MessageBlock';
-import { PeopleTable } from './PeopleTable';
+import { FilterPeople } from '../components/FilterPeople';
+import { MessageBlock } from '../components/MessageBlock';
+import { PeopleTable } from '../components/PeopleTable';
 import * as peopleActions from '../store/slices/personSlicer';
 import { useDispatch } from 'react-redux/es/hooks/useDispatch';
 import { useAppSelector } from '../store/hook';
@@ -15,8 +14,8 @@ export function checkQuery(name: string, username: string, query: string) {
   );
 }
 
-export function getFilteredPeople(peopleTable: Person[], query: string) {
-  return peopleTable.filter((person) =>
+export function getFilteredPeople(people: Person[], query: string) {
+  return people.filter((person) =>
     checkQuery(person.name, person.username, query),
   );
 }
@@ -24,28 +23,21 @@ export function getFilteredPeople(peopleTable: Person[], query: string) {
 export const PeopleTablePages = () => {
   const [query, setQuery] = useState('');
   const dispatch = useDispatch<any>();
-  
+
   const { people, loading } = useAppSelector((state) => state.people);
   useEffect(() => {
     dispatch(peopleActions.fetchUsers());
   }, []);
 
-  const { id } = useParams();
-
   const filteredPeople = getFilteredPeople(people, query);
 
   return (
     <>
-      <h1 className="title">People Page</h1>
+      <h1 className="title is-1 mt-1">People Page</h1>
       <FilterPeople query={query} setQuery={setQuery} />
-      <PeopleTable />
+      <PeopleTable people={filteredPeople}/>
 
-      {loading && (
-        <MessageBlock
-        loading={loading}
-          peopleTable={people}
-        />
-      )}
+      {loading && <MessageBlock loading={loading} peopleTable={filteredPeople} />}
     </>
   );
 };

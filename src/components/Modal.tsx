@@ -1,5 +1,5 @@
 import classNames, { Value } from 'classnames';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Interface } from 'readline';
 import { useAppSelector } from '../store/hook';
 import { Form } from './Form';
@@ -10,6 +10,10 @@ interface Props {
 }
 
 export const Modul: React.FC<Props> = ({ isOpen, setIsOpen }) => {
+  const [newName, setNewTitle] = useState(name);
+
+  const newTodoField = useRef<HTMLInputElement>(null);
+
   return (
     <>
       {isOpen && (
@@ -28,8 +32,7 @@ export const Modul: React.FC<Props> = ({ isOpen, setIsOpen }) => {
               ></button>
             </header>
             <section className="modal-card-body">
-              <Form
-              />
+              <Form />
             </section>
           </div>
         </div>

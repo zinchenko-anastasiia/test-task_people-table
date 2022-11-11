@@ -1,7 +1,6 @@
 import { Link, useFetcher, useNavigate, useParams } from 'react-router-dom';
 import '../styles/mystyles.scss';
 
-
 import classNames from 'classnames';
 import { useAppSelector } from '../store/hook';
 import { useDispatch } from 'react-redux/es/hooks/useDispatch';
@@ -16,7 +15,7 @@ export const PeopleInfo = () => {
   return (
     <>
       <div className="block">
-        <Link to="/people" className="button">
+        <Link to="/people" className="button mb-4 mt-4">
           back
         </Link>
         <nav className="pagination" role="navigation" aria-label="pagination">

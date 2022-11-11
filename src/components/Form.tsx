@@ -1,38 +1,8 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux/es/hooks/useDispatch';
 import { useAppSelector } from '../store/hook';
 import * as peopleActions from '../store/slices/personSlicer';
 
-interface Props {
-  name: string;
-  setName: (value: string) => void;
-  username: string;
-  setUsername: (value: string) => void;
-  email: string;
-  setEmail: (value: string) => void;
-  street: string;
-  setStreet: (value: string) => void;
-  suite: string;
-  setSuite: (value: string) => void;
-  city: string;
-  setCity: (value: string) => void;
-  zipcode: string;
-  setZipcode: (value: string) => void;
-  lat: string;
-  setLat: (value: string) => void;
-  lng: string;
-  setLng: (value: string) => void;
-  phone: string;
-  setPhone: (value: string) => void;
-  website: string;
-  setWebsite: (value: string) => void;
-  companyName: string;
-  setCompanyName: (value: string) => void;
-  catchPhrase: string;
-  setCatchPhrase: (value: string) => void;
-  bs: string;
-  setBs: (value: string) => void;
-}
 export const Form = () => {
   const [name, setName] = useState('');
   const [username, setUsername] = useState('');
@@ -48,6 +18,8 @@ export const Form = () => {
   const [companyName, setCompanyName] = useState('');
   const [catchPhrase, setCatchPhrase] = useState('');
   const [bs, setBs] = useState('');
+
+
 
   const dispatch = useDispatch<any>();
 
@@ -78,6 +50,7 @@ export const Form = () => {
       },
     };
   };
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     dispatch(peopleActions.add(newPerson()));

@@ -6,10 +6,7 @@ interface Props {
   peopleTable: Person[];
 }
 
-export const MessageBlock: React.FC<Props> = ({
-  loading,
-  peopleTable,
-}) => {
+export const MessageBlock: React.FC<Props> = ({ loading, peopleTable }) => {
   return (
     <div className="block">
       <div className="box table-container">

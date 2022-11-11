@@ -1,15 +1,13 @@
-import classNames, { Value } from 'classnames';
-import { useState } from 'react';
-import { Interface } from 'readline';
-import { useAppSelector } from '../store/hook';
-import { Form } from './Form';
+import classNames from 'classnames';
+import { UpdatingForm } from './UpdatingForm';
 
 interface Props {
   isOpenn: boolean;
   setIsOpenn: (value: boolean) => void;
+  id: number;
 }
 
-export const UpdateModal: React.FC<Props> = ({ isOpenn, setIsOpenn }) => {
+export const UpdateModal: React.FC<Props> = ({ isOpenn, setIsOpenn, id }) => {
   return (
     <>
       {isOpenn && (
@@ -28,7 +26,7 @@ export const UpdateModal: React.FC<Props> = ({ isOpenn, setIsOpenn }) => {
               ></button>
             </header>
             <section className="modal-card-body">
-              <Form />
+              <UpdatingForm id={id} />
             </section>
           </div>
         </div>

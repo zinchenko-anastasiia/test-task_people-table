@@ -26,12 +26,27 @@ const peopleSlice = createSlice({
       state.loading = action.payload;
     },
     add: (state, action: PayloadAction<Person>) => {
-      state.people.push(action.payload);
+      state.people.concat(action.payload); // push
     },
     remove: (state, action: PayloadAction<number>) => {
       state.people = state.people.filter(
         (person) => person.id !== action.payload,
       );
+    },
+    //@ts-ignore
+    update: (state, action: PayloadAction<any>) => {
+      console.log(action.payload.person.id);
+      const {newName, newUsername} = action.payload
+      state.people = [...state.people].map((person) => {
+        if (person.id === action.payload.person.id) {
+          return {
+            ...person,
+            name: newName,
+            username: newUsername,
+          };
+        }
+        return person;
+      });
     },
   },
   extraReducers(builder) {
@@ -40,17 +55,17 @@ const peopleSlice = createSlice({
         state.people = action.payload;
         state.loading = false;
       })
-      .addCase(fetchUsers.pending, state => {
+      .addCase(fetchUsers.pending, (state) => {
         state.loading = true;
       })
-      .addCase(fetchUsers.rejected, state => {
+      .addCase(fetchUsers.rejected, (state) => {
         state.loading = false;
       });
   },
 });
 
 export default peopleSlice.reducer;
-export const { remove, add, setLoading } = peopleSlice.actions;
+export const { remove, add, setLoading, update, set } = peopleSlice.actions;
 
 export const fetchUsers = createAsyncThunk('user/fetchUsers', () => {
   return getPeople();
