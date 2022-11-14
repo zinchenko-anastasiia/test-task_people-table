@@ -1,6 +1,8 @@
 import { createStore } from 'redux';
+import { configureStore } from '@reduxjs/toolkit';
 import { Action } from '../types/Action';
 import { ActionsType } from '../types/ActionsType';
+import { Person } from '../types/Person';
 import { State } from '../types/State';
 
 const initialState: State = {
@@ -21,11 +23,11 @@ const reducer = (state: State = initialState, action: Action) => {
         people: [...state.people, action.payload],
       };
 
-      case ActionsType.SELECT_PERSON:
-        return {
-          ...state,
-          selectedPerson: action.payload,
-        }
+    case ActionsType.SELECT_PERSON:
+      return {
+        ...state,
+        selectedPerson: action.payload,
+      };
 
     default:
       return state;

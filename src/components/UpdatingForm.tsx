@@ -1,27 +1,44 @@
 import { useCallback, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux/es/hooks/useDispatch';
-import { useAppSelector } from '../store/hook';
-import * as peopleActions from '../store/slices/personSlicer';
+import { setPeopleAction } from '../stores/actions';
+import { Person } from '../types/Person';
 interface Props {
-  id: number;
   setIsUpdated: (value: boolean) => void;
+  id: number;
+  people: Person[];
+  setIsOpenChangeModal: (value: boolean) => void;
 }
 
-export const UpdatingForm: React.FC<Props> = ({ id, setIsUpdated }) => {
-  const { people } = useAppSelector((state) => state.people);
+export const UpdatingForm: React.FC<Props> = ({ id, setIsUpdated, people, setIsOpenChangeModal }) => {
   const person = people.find((user) => id && user.id === id);
   const dispatch = useDispatch();
 
-  const [newName, setNewName] = useState(person?.name);
-  const [newUsername, setNewUsername] = useState(person?.username);
+  if(!person){
+    return <p>No selected person</p>
+  }
+
+  const [newName, setNewName] = useState(person.name);
+  const [newUsername, setNewUsername] = useState(person.username);
 
   const newTodoField = useRef<HTMLInputElement>(null);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsUpdated(true);
-    dispatch(peopleActions.update({ person, newName, newUsername }));
-  };
+    
+    dispatch(setPeopleAction(people.map(person=>{
+      if(person.id===id){
+        return ({
+          ...person,
+          name: newName,
+          username: newUsername,
+        })} 
+          return person
+      }
+    )))
+
+    setIsOpenChangeModal(false)
+  }
   return (
     <>
       <form className="modal-card-body" action="" onSubmit={handleSubmit}>
@@ -60,7 +77,6 @@ export const UpdatingForm: React.FC<Props> = ({ id, setIsUpdated }) => {
           <button className="button is-success" type="submit">
             Save
           </button>
-          <button className="button">Cancel</button>
         </footer>
       </form>
     </>

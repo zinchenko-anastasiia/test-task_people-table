@@ -12,12 +12,12 @@ export const PeopleInfo = () => {
   // const person = people.find((user) => id && user.id === +id);
   //@ts-ignore
   const person = useSelector(getPersonSelector);
-  
+
   if (!person) {
     return <p>No selected person</p>;
   }
 
-  console.log(person)
+  console.log(person);
 
   // const currentPerson = person.id;
 

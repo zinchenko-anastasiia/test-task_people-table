@@ -1,6 +1,6 @@
 import { Person } from './Person';
 
-export type State = { 
-  people: Person[]; 
-  selectedPerson: Person | null 
+export type State = {
+  people: Person[];
+  selectedPerson: Person | null;
 };

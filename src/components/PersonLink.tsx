@@ -10,10 +10,10 @@ interface Props {
 
 export const PersonLink: React.FC<Props> = ({ person }) => {
   const dispatch = useDispatch();
-  
+
   const getPerson = async (id: number) => {
     const personFromServer = await getPersonById(id);
-  
+
     dispatch(setPersonAction(personFromServer));
   };
   return (

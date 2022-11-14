@@ -16,3 +16,4 @@ export const setPersonAction = (payload: Person): Action => ({
   type: ActionsType.SELECT_PERSON,
   payload,
 });
+

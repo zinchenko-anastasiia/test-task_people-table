@@ -5,21 +5,21 @@ import { useAppSelector } from '../store/hook';
 import { Form } from './Form';
 
 interface Props {
-  isOpenAddModul: boolean;
+  isOpenAddModal: boolean;
   setIsOpen: (value: boolean) => void;
 }
 
-export const Modul: React.FC<Props> = ({ isOpenAddModul, setIsOpen }) => {
+export const Modul: React.FC<Props> = ({ isOpenAddModal, setIsOpen }) => {
   const [newName, setNewTitle] = useState(name);
 
   const newTodoField = useRef<HTMLInputElement>(null);
 
   return (
     <>
-      {isOpenAddModul && (
+      {isOpenAddModal && (
         <div
           className={classNames('modal', {
-            'is-active': isOpenAddModul,
+            'is-active': isOpenAddModal,
           })}
         >
           <div className="modal-background"></div>

@@ -6,37 +6,24 @@ import {
   useState,
 } from 'react';
 import { useDispatch } from 'react-redux';
-import { useAppSelector } from '../store/hook';
 import { Modul } from './Modal';
 import { UpdateModal } from './UpdateModal';
 import { PersonLink } from './PersonLink';
-import * as peopleActions from '../store/slices/personSlicer';
 import { Person } from '../types/Person';
-import { getPersonById, removePerson } from '../Api';
 import classNames from 'classnames';
-import { setPersonAction } from '../stores/actions';
-import { useSelector } from 'react-redux';
-import { getPersonSelector } from '../stores/selectors';
+import { setPeopleAction } from '../stores/actions';
+import { DeleteModal } from './DeleteModal';
 
 interface Props {
   people: Person[];
 }
 
 export const PeopleTable: React.FC<Props> = ({ people }) => {
-  const [isOpenAddModul, setIsOpen] = useState(false);
-  const [isOpenChangeModul, setIsOpenChangeModul] = useState(false);
+  const [isOpenAddModal, setIsOpen] = useState(false);
+  const [isOpenChangeModal, setIsOpenChangeModal] = useState(false);
   const [currentId, setCurrentId] = useState<number>(0);
   const [isUpdated, setIsUpdated] = useState(false);
-  const dispatch = useDispatch();
-
-  const remove = useCallback(
-    async (removeId: number) => {
-      await removePerson(removeId);
-      dispatch(peopleActions.remove(removeId));
-    },
-    [currentId],
-  );
-
+  const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
 
   const addClass = (person: Person) => isUpdated && currentId === person.id;
   return (
@@ -49,12 +36,19 @@ export const PeopleTable: React.FC<Props> = ({ people }) => {
           Add new
         </button>
       </div>
-      <Modul isOpenAddModul={isOpenAddModul} setIsOpen={setIsOpen} />
+      <Modul isOpenAddModal={isOpenAddModal} setIsOpen={setIsOpen} />
       <UpdateModal
-        isOpenChangeModul={isOpenChangeModul}
-        setIsOpenChangeModul={setIsOpenChangeModul}
+        isOpenChangeModal={isOpenChangeModal}
+        setIsOpenChangeModal={setIsOpenChangeModal}
         id={currentId}
         setIsUpdated={setIsUpdated}
+        people={people}
+      />
+      <DeleteModal
+        isOpenDeleteModal={isOpenDeleteModal}
+        setIsOpenDeleteModal={setIsOpenDeleteModal}
+        person={people[currentId]}
+        people={people}
       />
       <table className="table is-striped is-hoverable is-narrow is-fullwidth">
         <thead>
@@ -92,15 +86,18 @@ export const PeopleTable: React.FC<Props> = ({ people }) => {
                 </td>
                 <td>
                   <button
-                    className="button is-danger is-light mr-2"
-                    onClick={() => (setCurrentId(person.id), remove(person.id))}
+                    className="js-modal-trigger button is-danger is-light mr-2"
+                    onClick={() => (
+                      setCurrentId(person.id),
+                      setIsOpenDeleteModal((prev: boolean) => !prev)
+                    )}
                   >
                     delete
                   </button>
                   <button
                     className="js-modal-trigger button is-success is-light"
                     onClick={() => (
-                      setIsOpenChangeModul((prev: boolean) => !prev),
+                      setIsOpenChangeModal((prev: boolean) => !prev),
                       setCurrentId(person.id)
                     )}
                   >
