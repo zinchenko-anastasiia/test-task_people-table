@@ -5,6 +5,11 @@ import { MessageBlock } from '../components/MessageBlock';
 import { PeopleTable } from '../components/PeopleTable';
 import * as peopleActions from '../store/slices/personSlicer';
 import { useAppDispatch, useAppSelector } from '../store/hook';
+import { getPeople } from '../Api';
+import { useDispatch } from 'react-redux';
+import { setPeopleAction } from '../stores/actions';
+import { useSelector } from 'react-redux';
+import { getPeopleSelector } from '../stores/selectors';
 
 export function checkQuery(name: string, username: string, query: string) {
   return (
@@ -21,11 +26,22 @@ export function getFilteredPeople(people: Person[], query: string) {
 
 export const PeopleTablePages = () => {
   const [query, setQuery] = useState('');
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch();
+  const people = useSelector(getPeopleSelector)
 
-  const { people, loading } = useAppSelector((state) => state.people);
+  // const { people, loading } = useAppSelector((state) => state.people);
+  // useEffect(() => {
+  //   dispatch(peopleActions.fetchUsers());
+  // }, []);
+
   useEffect(() => {
-    dispatch(peopleActions.fetchUsers());
+    const loadPeopleFromServer = async () => {
+      const peopleFromServer = await getPeople();
+
+      dispatch(setPeopleAction(peopleFromServer))
+    }
+    
+    loadPeopleFromServer();
   }, []);
 
   const filteredPeople = getFilteredPeople(people, query);
@@ -36,9 +52,9 @@ export const PeopleTablePages = () => {
       <FilterPeople query={query} setQuery={setQuery} />
       <PeopleTable people={filteredPeople} />
 
-      {loading && (
+      {/* {loading && (
         <MessageBlock loading={loading} peopleTable={filteredPeople} />
-      )}
+      )} */}
     </>
   );
 };

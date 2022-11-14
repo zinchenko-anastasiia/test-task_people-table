@@ -6,10 +6,16 @@ function wait(delay: number) {
   return new Promise((resolve) => setTimeout(resolve, delay));
 }
 
-export function getPeople(): Promise<Person[]> {
-  return wait(500)
-    .then(() => fetch(API_URL))
-    .then((response) => response.json());
+export const getPeople = async(): Promise<Person[]> => {
+    const response = await fetch(API_URL);
+    
+    return response.json();
+}
+
+export const getPersonById = async(userId: number): Promise<Person> => {
+  const response = await fetch(`${API_URL}/${userId}`);
+  
+  return response.json();
 }
 
 export function removePerson(id: number) {

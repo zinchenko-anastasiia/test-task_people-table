@@ -12,8 +12,11 @@ import { UpdateModal } from './UpdateModal';
 import { PersonLink } from './PersonLink';
 import * as peopleActions from '../store/slices/personSlicer';
 import { Person } from '../types/Person';
-import { removePerson } from '../Api';
+import { getPersonById, removePerson } from '../Api';
 import classNames from 'classnames';
+import { setPersonAction } from '../stores/actions';
+import { useSelector } from 'react-redux';
+import { getPersonSelector } from '../stores/selectors';
 
 interface Props {
   people: Person[];
@@ -23,7 +26,7 @@ export const PeopleTable: React.FC<Props> = ({ people }) => {
   const [isOpenAddModul, setIsOpen] = useState(false);
   const [isOpenChangeModul, setIsOpenChangeModul] = useState(false);
   const [currentId, setCurrentId] = useState<number>(0);
-  const [isUpdated, setIsUpdated]=useState(false);
+  const [isUpdated, setIsUpdated] = useState(false);
   const dispatch = useDispatch();
 
   const remove = useCallback(
@@ -34,7 +37,8 @@ export const PeopleTable: React.FC<Props> = ({ people }) => {
     [currentId],
   );
 
-  const addClass = (person: Person) => isUpdated && currentId === person.id
+
+  const addClass = (person: Person) => isUpdated && currentId === person.id;
   return (
     <>
       <div className="buttons">
@@ -65,11 +69,27 @@ export const PeopleTable: React.FC<Props> = ({ people }) => {
           {people.map((person) => (
             <>
               <tr key={person.id}>
-                <td className={classNames({'has-text-weight-bold': addClass(person)})}>{person.id}</td>
-                <td className={classNames({'has-text-weight-bold': addClass(person)})}>
+                <td
+                  className={classNames({
+                    'has-text-weight-bold': addClass(person),
+                  })}
+                >
+                  {person.id}
+                </td>
+                <td
+                  className={classNames({
+                    'has-text-weight-bold': addClass(person),
+                  })}
+                >
                   <PersonLink person={person} />
                 </td>
-                <td className={classNames({'has-text-weight-bold': addClass(person)})}>{person.username}</td>
+                <td
+                  className={classNames({
+                    'has-text-weight-bold': addClass(person),
+                  })}
+                >
+                  {person.username}
+                </td>
                 <td>
                   <button
                     className="button is-danger is-light mr-2"

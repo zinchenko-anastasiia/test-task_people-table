@@ -32,7 +32,7 @@ export const UpdateModal: React.FC<Props> = ({
               ></button>
             </header>
             <section className="modal-card-body">
-              <UpdatingForm id={id} setIsUpdated={setIsUpdated}/>
+              <UpdatingForm id={id} setIsUpdated={setIsUpdated} />
             </section>
           </div>
         </div>

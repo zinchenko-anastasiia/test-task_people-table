@@ -3,14 +3,23 @@ import '../styles/mystyles.scss';
 
 import classNames from 'classnames';
 import { useAppSelector } from '../store/hook';
-import { useDispatch } from 'react-redux/es/hooks/useDispatch';
+import { getPersonSelector } from '../stores/selectors';
+import { useSelector } from 'react-redux';
 
 export const PeopleInfo = () => {
   const { id } = useParams();
-  const { people } = useAppSelector((state) => state.people);
-  const person = people.find((user) => id && user.id === +id);
+  // const { people } = useAppSelector((state) => state.people);
+  // const person = people.find((user) => id && user.id === +id);
   //@ts-ignore
-  const currentPerson = person.id;
+  const person = useSelector(getPersonSelector);
+  
+  if (!person) {
+    return <p>No selected person</p>;
+  }
+
+  console.log(person)
+
+  // const currentPerson = person.id;
 
   return (
     <>
@@ -18,7 +27,7 @@ export const PeopleInfo = () => {
         <Link to="/people" className="button mb-4 mt-4 is-link is-outlined">
           back
         </Link>
-        <nav className="pagination" role="navigation" aria-label="pagination">
+        {/* <nav className="pagination" role="navigation" aria-label="pagination">
           <>
             <Link
               className={classNames('pagination-previous', {
@@ -43,7 +52,7 @@ export const PeopleInfo = () => {
               next
             </Link>
           </>
-        </nav>
+        </nav> */}
 
         <div className="table-container">
           <table className="table table is-bordered is-striped is-hoverable is-narrow is-fullwidth ">
@@ -67,21 +76,21 @@ export const PeopleInfo = () => {
               </tr>
             </thead>
             <tbody>
-              <td>{person?.id}</td>
-              <td>{person?.name}</td>
-              <td>{person?.username}</td>
-              <td>{person?.email}</td>
-              <td>{person?.address.street}</td>
-              <td>{person?.address.suite}</td>
-              <td>{person?.address.city}</td>
-              <td>{person?.address.zipcode}</td>
-              <td>{person?.address.geo.lat}</td>
-              <td>{person?.address.geo.lng}</td>
-              <td>{person?.phone}</td>
-              <td>{person?.website}</td>
-              <td>{person?.company.name}</td>
-              <td>{person?.company.catchPhrase}</td>
-              <td>{person?.company.bs}</td>
+              <td>{person.id}</td>
+              <td>{person.name}</td>
+              <td>{person.username}</td>
+              <td>{person.email}</td>
+              <td>{person.address.street}</td>
+              <td>{person.address.suite}</td>
+              <td>{person.address.city}</td>
+              <td>{person.address.zipcode}</td>
+              <td>{person.address.geo.lat}</td>
+              <td>{person.address.geo.lng}</td>
+              <td>{person.phone}</td>
+              <td>{person.website}</td>
+              <td>{person.company.name}</td>
+              <td>{person.company.catchPhrase}</td>
+              <td>{person.company.bs}</td>
             </tbody>
           </table>
         </div>
