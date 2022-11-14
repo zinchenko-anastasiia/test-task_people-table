@@ -1,9 +1,14 @@
-import { useRef, useState } from 'react';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux/es/hooks/useDispatch';
-import { useAppSelector } from '../store/hook';
-import * as peopleActions from '../store/slices/personSlicer';
+import { setPeopleAction } from '../store/actions';
+import { getPeopleSelector } from '../store/selectors';
 
-export const Form = () => {
+interface Props {
+  setIsOpen: (value: boolean) => void;
+}
+
+export const Form: React.FC<Props> = ({ setIsOpen }) => {
   const [name, setName] = useState('');
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
@@ -20,8 +25,7 @@ export const Form = () => {
   const [bs, setBs] = useState('');
 
   const dispatch = useDispatch();
-
-  const { people } = useAppSelector((state) => state.people);
+  const people = useSelector(getPeopleSelector);
 
   const newPerson = () => {
     return {
@@ -64,9 +68,7 @@ export const Form = () => {
     catchPhrase.trim().length > 0 &&
     bs.trim().length > 0;
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    dispatch(peopleActions.add(newPerson()));
+  const clear = () => {
     setName('');
     setUsername('');
     setEmail('');
@@ -82,6 +84,13 @@ export const Form = () => {
     setCatchPhrase('');
     setBs('');
   };
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    dispatch(setPeopleAction([...people, newPerson()]));
+    clear();
+    setIsOpen(false);
+  };
   return (
     <>
       <form className="modal-card-body" action="" onSubmit={handleSubmit}>
@@ -92,7 +101,7 @@ export const Form = () => {
               <label className="label">Name</label>
               <p className="control is-expanded ">
                 <input
-                  className="input"
+                  className="input is-info"
                   type="text"
                   value={name}
                   required
@@ -106,7 +115,7 @@ export const Form = () => {
               <label className="label">Username</label>
               <p className="control is-expanded has-icons-left has-icons-right">
                 <input
-                  className="input"
+                  className="input is-info"
                   type="text"
                   value={username}
                   required
@@ -122,7 +131,7 @@ export const Form = () => {
           <label className="label">Email</label>
           <div className="control">
             <input
-              className="input"
+              className="input is-info"
               type="email"
               value={email}
               required
@@ -138,7 +147,7 @@ export const Form = () => {
           <label className="label">Street</label>
           <div className="control">
             <input
-              className="input"
+              className="input is-info"
               type="text"
               placeholder=""
               value={street}
@@ -154,7 +163,7 @@ export const Form = () => {
           <label className="label">Suite</label>
           <div className="control">
             <input
-              className="input"
+              className="input is-info"
               type="text"
               placeholder=""
               value={suite}
@@ -170,7 +179,7 @@ export const Form = () => {
           <label className="label">City</label>
           <div className="control">
             <input
-              className="input"
+              className="input is-info"
               type="text"
               placeholder=""
               value={city}
@@ -186,7 +195,7 @@ export const Form = () => {
           <label className="label">Zipcode</label>
           <div className="control">
             <input
-              className="input"
+              className="input is-info"
               type="text"
               placeholder=""
               value={zipcode}
@@ -204,7 +213,7 @@ export const Form = () => {
               <label className="label">Lat</label>
               <p className="control is-expanded ">
                 <input
-                  className="input"
+                  className="input is-info"
                   type="text"
                   value={lat}
                   required
@@ -218,7 +227,7 @@ export const Form = () => {
               <label className="label">Lng</label>
               <p className="control is-expanded has-icons-left has-icons-right">
                 <input
-                  className="input"
+                  className="input is-info"
                   type="text"
                   value={lng}
                   required
@@ -237,7 +246,7 @@ export const Form = () => {
           <label className="label">Phone</label>
           <div className="control">
             <input
-              className="input"
+              className="input is-info"
               type="text"
               value={phone}
               required
@@ -252,7 +261,7 @@ export const Form = () => {
           <label className="label">Website</label>
           <div className="control">
             <input
-              className="input"
+              className="input is-info"
               type="text"
               value={website}
               required
@@ -269,7 +278,7 @@ export const Form = () => {
           <label className="label">Name</label>
           <div className="control">
             <input
-              className="input"
+              className="input is-info"
               type="text"
               value={companyName}
               required
@@ -284,7 +293,7 @@ export const Form = () => {
           <label className="label">Catch Phrase</label>
           <div className="control">
             <input
-              className="input"
+              className="input is-info"
               type="text"
               value={catchPhrase}
               required
@@ -299,7 +308,7 @@ export const Form = () => {
           <label className="label">Bs</label>
           <div className="control">
             <input
-              className="input"
+              className="input is-info"
               type="text"
               value={bs}
               required
@@ -317,6 +326,12 @@ export const Form = () => {
           >
             Save
           </button>
+
+          <div className="control">
+            <button className="button is-danger" onClick={() => clear()}>
+              Cancel
+            </button>
+          </div>
         </footer>
       </form>
     </>

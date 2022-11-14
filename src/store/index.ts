@@ -17,11 +17,6 @@ const reducer = (state: State = initialState, action: Action) => {
         ...state,
         people: [...action.payload],
       };
-    case ActionsType.ADD_PERSON:
-      return {
-        ...state,
-        people: [...state.people, action.payload],
-      };
 
     case ActionsType.SELECT_PERSON:
       return {
@@ -34,4 +29,4 @@ const reducer = (state: State = initialState, action: Action) => {
   }
 };
 
-export const store = createStore(reducer)
+export const store = createStore(reducer);

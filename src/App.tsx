@@ -7,7 +7,7 @@ import { PeopleInfo } from './pages/PeopleInfo';
 import { PeopleTablePages } from './pages/PeopleTablePages';
 import './styles/mystyles.scss';
 import { getPeople } from './Api';
-import { setPeopleAction } from './stores/actions';
+import { setPeopleAction } from './store/actions';
 import { useDispatch } from 'react-redux';
 
 export const App = () => {

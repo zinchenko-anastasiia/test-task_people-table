@@ -2,8 +2,6 @@ import { State } from '../types/State';
 
 export const getPeopleSelector = (state: State) => state.people;
 
-export const getPersonSelector = (state: State) => state.selectedPerson;
-
 export const getFilteredPeopleSelector = (query: string) => {
   return (state: State) => {
     return state.people.filter(
@@ -14,3 +12,8 @@ export const getFilteredPeopleSelector = (query: string) => {
   };
 };
 
+export const getPersonSelector = (id: number) => {
+  return (state: State) => {
+    return state.people.find((person) => person.id === id);
+  };
+};

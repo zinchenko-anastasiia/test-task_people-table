@@ -8,6 +8,7 @@ interface Props {
   id: number;
   setIsUpdated: (value: boolean) => void;
   people: Person[];
+  setUpdatedPeopleId:  React.Dispatch<React.SetStateAction<number[]>>
 }
 
 export const UpdateModal: React.FC<Props> = ({
@@ -16,6 +17,7 @@ export const UpdateModal: React.FC<Props> = ({
   id,
   setIsUpdated,
   people,
+  setUpdatedPeopleId,
 }) => {
   return (
     <>
@@ -40,6 +42,7 @@ export const UpdateModal: React.FC<Props> = ({
                 setIsUpdated={setIsUpdated}
                 people={people}
                 setIsOpenChangeModal={setIsOpenChangeModal}
+                setUpdatedPeopleId={setUpdatedPeopleId}
               />
             </section>
           </div>

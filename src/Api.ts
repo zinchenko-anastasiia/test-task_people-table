@@ -17,4 +17,3 @@ export const getPersonById = async (userId: number): Promise<Person> => {
 
   return response.json();
 };
-

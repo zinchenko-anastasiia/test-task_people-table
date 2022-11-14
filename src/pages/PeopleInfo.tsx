@@ -2,24 +2,56 @@ import { Link, useFetcher, useNavigate, useParams } from 'react-router-dom';
 import '../styles/mystyles.scss';
 
 import classNames from 'classnames';
-import { useAppSelector } from '../store/hook';
-import { getPersonSelector } from '../stores/selectors';
-import { useSelector } from 'react-redux';
+import { getPeopleSelector, getPersonSelector } from '../store/selectors';
+import { useDispatch, useSelector } from 'react-redux';
+import { getPersonById } from '../Api';
+import { setPersonAction } from '../store/actions';
 
 export const PeopleInfo = () => {
   const { id } = useParams();
-  // const { people } = useAppSelector((state) => state.people);
-  // const person = people.find((user) => id && user.id === +id);
-  //@ts-ignore
-  const person = useSelector(getPersonSelector);
 
-  if (!person) {
+  if (!id) {
     return <p>No selected person</p>;
   }
 
-  console.log(person);
+  const person = useSelector(getPersonSelector(+id));
+  const people = useSelector(getPeopleSelector);
 
-  // const currentPerson = person.id;
+  if (!person || !id) {
+    return <p>No selected person</p>;
+  }
+
+  const dispatch = useDispatch();
+
+  const getPerson = (id: number) => {
+    const personFromServer = useSelector(getPersonSelector(+id));
+
+    if (!personFromServer) {
+      return <p>No selected person</p>;
+    }
+
+    dispatch(setPersonAction(personFromServer));
+  };
+
+  const nextUser = people
+    .sort((p1, p2) => p1.id - p2.id)
+    .find((person) => person.id > +id);
+
+  const prevUser = [...people]
+    .sort((p1, p2) => p2.id - p1.id)
+    .find((person) => person.id < +id);
+
+  let isLast = false;
+
+  if (!nextUser) {
+    isLast = true;
+  }
+
+  let isFirst = false;
+
+  if (!prevUser) {
+    isFirst = true;
+  }
 
   return (
     <>
@@ -27,35 +59,31 @@ export const PeopleInfo = () => {
         <Link to="/people" className="button mb-4 mt-4 is-link is-outlined">
           back
         </Link>
-        {/* <nav className="pagination" role="navigation" aria-label="pagination">
+        <nav className="pagination" role="navigation" aria-label="pagination">
           <>
             <Link
               className={classNames('pagination-previous', {
-                'is-disabled': currentPerson == 1,
+                'is-disabled': isFirst,
               })}
-              to={`/people/${
-                currentPerson > 1 ? currentPerson - 1 : currentPerson
-              }`}
+              to={`/people/${prevUser ? prevUser.id : id}`}
+              onClick={() => prevUser && getPerson(prevUser.id)}
             >
               previous
             </Link>
             <Link
               className={classNames('pagination-next', {
-                'is-disabled': currentPerson === people.length,
+                'is-disabled': isLast,
               })}
-              to={`/people/${
-                currentPerson < people.length
-                  ? currentPerson + 1
-                  : currentPerson
-              }`}
+              to={`/people/${nextUser ? nextUser.id : id}`}
+              onClick={() => nextUser && getPerson(nextUser.id)}
             >
               next
             </Link>
           </>
-        </nav> */}
+        </nav>
 
         <div className="table-container">
-          <table className="table table is-bordered is-striped is-hoverable is-narrow is-fullwidth ">
+          <table className="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
             <thead>
               <tr>
                 <th>id</th>

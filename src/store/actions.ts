@@ -7,13 +7,7 @@ export const setPeopleAction = (payload: Person[]): Action => ({
   payload,
 });
 
-export const addPersonAction = (payload: Person): Action => ({
-  type: ActionsType.ADD_PERSON,
-  payload,
-});
-
 export const setPersonAction = (payload: Person): Action => ({
   type: ActionsType.SELECT_PERSON,
   payload,
 });
-

@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getPersonById } from '../Api';
-import { setPersonAction } from '../stores/actions';
+import { setPersonAction } from '../store/actions';
 import { Person } from '../types/Person';
 
 interface Props {

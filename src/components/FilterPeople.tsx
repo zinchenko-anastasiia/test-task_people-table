@@ -7,7 +7,9 @@ interface Props {
 export const FilterPeople: React.FC<Props> = ({ query, setQuery }) => {
   const handlerChangeInput = (event: React.ChangeEvent<HTMLInputElement>) =>
     setQuery(event.target.value);
-  const handlerReset = () => setQuery('');
+  
+    const handlerReset = () => setQuery('');
+  
   return (
     <div className="mt-1">
       <p className="control is-expanded has-icons-left has-icons-right">
